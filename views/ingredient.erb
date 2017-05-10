@@ -1,0 +1,11 @@
+<h3><a href="/ingredients/<%= @ingredient.id%>"><%= @ingredient.name%></a></h3>
+<form action="/ingredients/<%= @ingredient.id%>" method="post">
+  <input type='hidden' name='_method' value='patch' />
+  <label for="ingredient[name]">Name</label>
+  <input type="text" name="ingredient[name]" />
+  <button class='btn btn-default' type="submit">Edit Ingredient</button>
+</form>
+<form action="/ingredients/<%= @ingredient.id%>" method="post">
+  <input type='hidden' name='_method' value='delete' />
+  <button class='btn btn-default' type='submit'>Delete Ingredient</button>
+</form>

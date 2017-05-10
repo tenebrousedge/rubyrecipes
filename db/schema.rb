@@ -10,45 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510163134) do
-
+ActiveRecord::Schema.define(version: 20_170_510_175_852) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "ingredients", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'ingredients', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "ingredients_recipes", force: :cascade do |t|
-    t.bigint "ingredient_id"
-    t.bigint "recipe_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ingredient_id"], name: "index_ingredients_recipes_on_ingredient_id"
-    t.index ["recipe_id"], name: "index_ingredients_recipes_on_recipe_id"
+  create_table 'ingredients_recipes', force: :cascade do |t|
+    t.bigint 'ingredient_id'
+    t.bigint 'recipe_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.text 'quantity'
+    t.index ['ingredient_id'], name: 'index_ingredients_recipes_on_ingredient_id'
+    t.index ['recipe_id'], name: 'index_ingredients_recipes_on_recipe_id'
   end
 
-  create_table "recipes", force: :cascade do |t|
-    t.string "name"
-    t.text "instructions"
-    t.decimal "rating", precision: 3, scale: 2
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'recipes', force: :cascade do |t|
+    t.string 'name'
+    t.text 'instructions'
+    t.decimal 'rating', precision: 3, scale: 2
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "recipes_tags", force: :cascade do |t|
-    t.bigint "recipe_id"
-    t.bigint "tag_id"
-    t.index ["recipe_id"], name: "index_recipes_tags_on_recipe_id"
-    t.index ["tag_id"], name: "index_recipes_tags_on_tag_id"
+  create_table 'recipes_tags', force: :cascade do |t|
+    t.bigint 'recipe_id'
+    t.bigint 'tag_id'
+    t.index ['recipe_id'], name: 'index_recipes_tags_on_recipe_id'
+    t.index ['tag_id'], name: 'index_recipes_tags_on_tag_id'
   end
 
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'tags', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end

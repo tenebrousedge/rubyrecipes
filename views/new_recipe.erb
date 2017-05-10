@@ -1,0 +1,20 @@
+<form method="post" action="/recipes">
+  <label for="recipe[name]">Name</label>
+  <input type="text" name="recipe[name]" />
+  <label for="recipe[instructions]">Instructions</label>
+  <input type="text" name="recipe[instructions]" />
+  <label for='recipe[rating]'>Rating</label>
+  <input type='number' step='.1' min='1' max='5' name="recipe[rating]" />
+  <h3>Ingredient Quantities</h3>
+  <% @ingredients.each do |ingredient| %>
+    <label for='ingredient[][quantity]'><%= ingredient.name %></label>
+    <input type="text" name='ingredient[][quantity]' />
+    <input type="hidden" name='ingredient[][ingredient_id]' value='<%= ingredient.id %>' />
+  <% end %>
+  <h3>Tags</h3>
+  <% @tags.each do |tag| %>
+    <label for='tag[][id]'><%= tag.name %></label>
+    <input type='checkbox' name='tag[][id]' value="<%=tag.id%>" />
+  <% end %>
+  <button type="submit" class="btn btn-default">Create New Recipe</button>
+</form>

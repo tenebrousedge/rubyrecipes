@@ -1,0 +1,47 @@
+<div class="panel panel-info">
+  <div class="panel-header">
+    <h3><%= @recipe.name %></h3>
+  </div>
+  <div class="panel-body">
+    <ul name='ingredients'>
+      <% @recipe.ingredients_lists.each do |i| %>
+      <li>
+        <%= i.quantity %> <a href="/<%= i.ingredient.name%>/recipes"><%= i.ingredient.name %>
+      </li>
+      <% end %>
+    </ul>
+    <div name='instructions'>
+      <%= @recipe.instructions %>
+    </div>
+    <div name='tags'>
+      <% @recipe.tags.each do |tag| %>
+        <a href="/recipes/tagged/<%= tag.id %>"><%=tag.name%></a>
+      <% end %>
+    </div>
+  </div>
+</div>
+<form method="post" action="/recipes/<%=@recipe.id%>">
+  <input type='hidden' name='_method' value='patch' />
+  <label for="recipe[name]">Name</label>
+  <input type="text" name="recipe[name]" />
+  <label for="recipe[instructions]">Instructions</label>
+  <input type="text" name="recipe[instructions]" />
+  <label for='recipe[rating]'>Rating</label>
+  <input type='number' step='.1' min='1' max='5' name="recipe[rating]" />
+  <h3>Ingredient Quantities</h3>
+  <% @ingredients.each do |ingredient| %>
+    <label for='ingredient[][quantity]'><%= ingredient.name %></label>
+    <input type="text" name='ingredient[][quantity]' />
+    <input type="hidden" name='ingredient[][id]' value='<%= ingredient.id %>' />
+  <% end %>
+  <h3>Tags</h3>
+  <% @tags.each do |tag| %>
+    <label for='tag[][id]'><%= tag.name %></label>
+    <input type='checkbox' name='tag[][id]' value="<%tag.id%>" />
+  <% end %>
+  <button type="submit" class="btn btn-default">Edit Recipe</button>
+</form>
+<form method="post" action="/recipes/<%=@recipe.id%>">
+  <input type='hidden' name='_method' value='delete' />
+  <button class="btn btn-info" type="submit">Delete Recipe</button>
+</form>
