@@ -1,0 +1,6 @@
+development:
+  adapter: postgresql
+  database: rubyrecipes_dev
+test:
+  adapter: postgresql
+  database: rubyrecipes_test
