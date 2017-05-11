@@ -1,5 +1,7 @@
 require 'bundler/setup'
 require 'rubyrecipes'
+require 'shoulda-matchers'
+require 'pry-byebug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -7,5 +9,13 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+end
+
+Shoulda::Matchers.configure do |c|
+  c.integrate do |with|
+    with.test_framework :rspec
+    with.library :active_record
+    with.library :active_model
   end
 end

@@ -6,6 +6,14 @@ RSpec.describe Rubyrecipes do
   end
 
   it 'does something useful' do
-    expect(false).to eq(true)
+    expect(true).to eq(true)
+  end
+
+  describe Rubyrecipes::Ingredient, type: :model do
+    it { should have_many(:recipes).through(:ilists)}
+  end
+
+  describe Rubyrecipes::Recipe, type: :model do
+    it { should have_many(:ingredients).through(:ilists)}
   end
 end

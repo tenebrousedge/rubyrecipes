@@ -5,12 +5,15 @@
   </div>
   <div class="panel-body">
     <ul name='ingredients'>
-      <% recipe.ingredients_lists.each do |i| %>
+      <% recipe.ilists.each do |i| %>
       <li>
-        <%= i.quantity %> <a href="/<%= i.ingredient.name%>/recipes"><%= i.ingredient.name %>
+        <%= i.quantity %> <a href="/<%= i.ingredient.name%>/recipes"><%= i.ingredient.name %></a>
       </li>
       <% end %>
     </ul>
+    <div name='rating'>
+      <%= rating_view(recipe.rating) %>
+    </div>
     <div name='instructions'>
       <%= recipe.instructions %>
     </div>
@@ -22,3 +25,8 @@
   </div>
 </div>
 <% end %>
+<script>
+$(document).ready(function() {
+  $('.rating_view').rateYo();
+});
+</script>

@@ -1,10 +1,11 @@
 require 'rubyrecipes/version'
+require 'sinatra/activerecord'
 
 # Namespace module for Rubyrecipes
 module Rubyrecipes
   class Recipe < ActiveRecord::Base
-    has_many :ingredients, through: :ingredients_list
-    has_many :ingredients_lists
+    has_many :ilists
+    has_many :ingredients, through: :ilists
     has_and_belongs_to_many :tags
     scope :best, -> { order(rating: :desc) }
 
@@ -18,11 +19,12 @@ module Rubyrecipes
   end
 
   class Ingredient < ActiveRecord::Base
-    has_many :recipes, through: :ingredients_list
+    has_many :ilists
+    has_many :recipes, through: :ilists
     validates :name, presence: true
   end
 
-  class IngredientsList < ActiveRecord::Base
+  class Ilist < ActiveRecord::Base
     self.table_name = 'ingredients_recipes'
     belongs_to :ingredient
     belongs_to :recipe

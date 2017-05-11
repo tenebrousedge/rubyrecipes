@@ -20,7 +20,7 @@ class RubyrecipesApp < Sinatra::Application
     @imodel = Rubyrecipes::Ingredient
     @tmodel = Rubyrecipes::Tag
     @rmodel = Rubyrecipes::Recipe
-    @listmodel = Rubyrecipes::IngredientsList
+    @listmodel = Rubyrecipes::Ilist
   end
   get('/') do
     erb(:index)
@@ -59,7 +59,7 @@ class RubyrecipesApp < Sinatra::Application
   end
 
   get '/:ingredient/recipes' do
-    @recipes = @imodel.where(name: params.fetch(:ingredient)).recipes
+    @recipes = @imodel.find_by(name: params.fetch(:ingredient)).recipes
     erb :recipes
   end
 
@@ -108,11 +108,11 @@ class RubyrecipesApp < Sinatra::Application
 
   post '/recipes' do
     data = params.fetch :recipe
-    tags = params.fetch :tag
+    tags = params[:tag]
     ings = params.fetch :ingredient
     recipe = @rmodel.create(data)
-    recipe.tags << @tmodel.find(tags.map { |e| e[:id] })
-    recipe.ingredients_lists << @listmodel.create(ings)
+    recipe.tags << @tmodel.find(tags.map { |e| e[:id] }) unless tags.nil?
+    recipe.ilists << @listmodel.create(ings)
     redirect '/recipes'
   end
 
@@ -135,6 +135,21 @@ class RubyrecipesApp < Sinatra::Application
     redirect '/recipes'
   end
 
+  get '/recipes/by/rating' do
+    @recipes = @rmodel.best
+    erb :recipes
+  end
+
+  get '/recipes/by/ingredient' do
+    @ingredients = @imodel.all
+    erb :recipes_by_ingredient
+  end
+
+  get '/tagged' do
+    @tags = @tmodel.all
+    erb :recipes_by_tag
+  end
+
   get('/search') do
     @recipes = @rmodel.where('name ILIKE ?', "%#{params.fetch(:q)}%")
     erb :recipes
@@ -142,3 +157,4 @@ class RubyrecipesApp < Sinatra::Application
 
   run! if app_file == $PROGRAM_NAME
 end
+require_relative 'helpers/rating'
