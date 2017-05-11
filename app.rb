@@ -145,6 +145,11 @@ class RubyrecipesApp < Sinatra::Application
     erb :recipes_by_ingredient
   end
 
+  get '/recipes/tagged/:tag' do
+    @recipes = @tmodel.find_by(name: params.fetch(:tag)).recipes
+    erb :recipes
+  end
+
   get '/tagged' do
     @tags = @tmodel.all
     erb :recipes_by_tag
